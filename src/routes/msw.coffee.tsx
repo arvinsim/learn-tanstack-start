@@ -7,7 +7,7 @@ export const Route = createFileRoute("/msw/coffee")({
 	component: CoffeesIndex,
 });
 
-function CoffeesIndex() {
+export function CoffeesIndex() {
 	const { data: coffeeData = [], refetch } = useQuery<CoffeeVariant[]>({
 		queryKey: ["coffee"],
 		queryFn: () => fetch("/api/coffee").then((res) => res.json()),

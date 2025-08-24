@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 
 export const handlers = [
-	http.get("https://localhost/msw/coffee", () => {
+	http.get("/api/coffee", () => {
 		return HttpResponse.json([
 			{
 				name: "Foobar",
