@@ -1,12 +1,5 @@
-import { http, HttpResponse } from "msw";
-
+// Global handlers for endpoints that need consistent mocking across all tests
+// For per-test mocking, use server.use() in individual test files
 export const handlers = [
-	http.get("/api/coffee", () => {
-		return HttpResponse.json([
-			{
-				name: "Foobar",
-				ingredients: [{ name: "Foamed Milk", value: 100, color: "red" }],
-			},
-		]);
-	}),
+	// Add any global handlers here if needed
 ];
