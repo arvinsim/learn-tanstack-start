@@ -61,7 +61,8 @@ const openApiSpec: OpenApiInfo = {
 	info: {
 		title: "Users API",
 		version: "1.0.0",
-		description: "A simple API for managing users with OpenAPI 3.0 specification",
+		description:
+			"A simple API for managing users with OpenAPI 3.0 specification",
 	},
 	paths: {
 		"/api/users": {
@@ -203,10 +204,10 @@ export const ServerRoute = createServerFileRoute("/api/users").methods({
 	POST: async ({ request }) => {
 		try {
 			const body = await request.json();
-			
+
 			// Validate input using Zod
 			const validatedData = CreateUserSchema.parse(body);
-			
+
 			// Create new user
 			const newUser: User = {
 				id: users.length + 1,
@@ -234,9 +235,10 @@ export const ServerRoute = createServerFileRoute("/api/users").methods({
 		} catch (error) {
 			const response: ApiResponse<never> = {
 				success: false,
-				error: error instanceof z.ZodError 
-					? `Validation error: ${error.errors.map(e => e.message).join(", ")}`
-					: "Invalid request data",
+				error:
+					error instanceof z.ZodError
+						? `Validation error: ${error.errors.map((e) => e.message).join(", ")}`
+						: "Invalid request data",
 			};
 
 			return Response.json(response, {
