@@ -17,6 +17,7 @@ import { Route as DemoTrpcTodoRouteImport } from './routes/demo.trpc-todo'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo.start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo.start.api-request'
+import { ServerRoute as ApiUsersServerRouteImport } from './routes/api.users'
 import { ServerRoute as ApiDemoTqTodosServerRouteImport } from './routes/api.demo-tq-todos'
 import { ServerRoute as ApiDemoNamesServerRouteImport } from './routes/api.demo-names'
 import { ServerRoute as ApiCoffeeServerRouteImport } from './routes/api.coffee'
@@ -53,6 +54,11 @@ const DemoStartApiRequestRoute = DemoStartApiRequestRouteImport.update({
   id: '/demo/start/api-request',
   path: '/demo/start/api-request',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUsersServerRoute = ApiUsersServerRouteImport.update({
+  id: '/api/users',
+  path: '/api/users',
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 const ApiDemoTqTodosServerRoute = ApiDemoTqTodosServerRouteImport.update({
   id: '/api/demo-tq-todos',
@@ -139,12 +145,14 @@ export interface FileServerRoutesByFullPath {
   '/api/coffee': typeof ApiCoffeeServerRoute
   '/api/demo-names': typeof ApiDemoNamesServerRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosServerRoute
+  '/api/users': typeof ApiUsersServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/coffee': typeof ApiCoffeeServerRoute
   '/api/demo-names': typeof ApiDemoNamesServerRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosServerRoute
+  '/api/users': typeof ApiUsersServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesById {
@@ -152,6 +160,7 @@ export interface FileServerRoutesById {
   '/api/coffee': typeof ApiCoffeeServerRoute
   '/api/demo-names': typeof ApiDemoNamesServerRoute
   '/api/demo-tq-todos': typeof ApiDemoTqTodosServerRoute
+  '/api/users': typeof ApiUsersServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRouteTypes {
@@ -160,14 +169,21 @@ export interface FileServerRouteTypes {
     | '/api/coffee'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
+    | '/api/users'
     | '/api/trpc/$'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/coffee' | '/api/demo-names' | '/api/demo-tq-todos' | '/api/trpc/$'
+  to:
+    | '/api/coffee'
+    | '/api/demo-names'
+    | '/api/demo-tq-todos'
+    | '/api/users'
+    | '/api/trpc/$'
   id:
     | '__root__'
     | '/api/coffee'
     | '/api/demo-names'
     | '/api/demo-tq-todos'
+    | '/api/users'
     | '/api/trpc/$'
   fileServerRoutesById: FileServerRoutesById
 }
@@ -175,6 +191,7 @@ export interface RootServerRouteChildren {
   ApiCoffeeServerRoute: typeof ApiCoffeeServerRoute
   ApiDemoNamesServerRoute: typeof ApiDemoNamesServerRoute
   ApiDemoTqTodosServerRoute: typeof ApiDemoTqTodosServerRoute
+  ApiUsersServerRoute: typeof ApiUsersServerRoute
   ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute
 }
 
@@ -226,6 +243,13 @@ declare module '@tanstack/react-router' {
 }
 declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
+    '/api/users': {
+      id: '/api/users'
+      path: '/api/users'
+      fullPath: '/api/users'
+      preLoaderRoute: typeof ApiUsersServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/demo-tq-todos': {
       id: '/api/demo-tq-todos'
       path: '/api/demo-tq-todos'
@@ -272,6 +296,7 @@ const rootServerRouteChildren: RootServerRouteChildren = {
   ApiCoffeeServerRoute: ApiCoffeeServerRoute,
   ApiDemoNamesServerRoute: ApiDemoNamesServerRoute,
   ApiDemoTqTodosServerRoute: ApiDemoTqTodosServerRoute,
+  ApiUsersServerRoute: ApiUsersServerRoute,
   ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
